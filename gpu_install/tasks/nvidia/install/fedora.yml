@@ -1,0 +1,22 @@
+---
+- name: Install GPU driver repository
+  ansible.builtin.dnf:
+    pkg:
+      - "{{ download_url }}"
+    state: present
+    disable_gpg_check: true
+  when: not dry_run
+
+- name: Install required packages/repos
+  ansible.builtin.dnf:
+    pkg:
+      - kernel-devel-{{ ansible_kernel }}
+      - kernel-headers-{{ ansible_kernel }}
+    state: present
+  when: not dry_run
+
+- name: Install Nvidia drivers
+  ansible.builtin.dnf:
+    name:
+      - "@nvidia-driver:latest-dkms"
+  when: not dry_run

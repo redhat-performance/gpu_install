@@ -1,0 +1,28 @@
+---
+- name: Install driver repo
+  ansible.builtin.apt:
+    deb: "{{ download_url }}"
+  when: not dry_run
+
+- name: Find GPG key
+  ansible.builtin.find:
+    paths: /var/nvidia-driver-local-repo-ubuntu{{ ansible_distribution_version | replace('.', '') }}-{{ driver_version }}
+    patterns: "nvidia-driver-*-keyring.gpg"
+    file_type: file
+  register: keys
+
+- name: Copy GPG key to needed location
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ item.path }}"
+    dest: /usr/share/keyrings/
+  with_items: "{{ keys.files }}"
+
+- name: Install Drivers
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - cuda-drivers
+  notify:
+    - Reboot system
+  when: not dry_run

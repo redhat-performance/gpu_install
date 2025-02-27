@@ -1,0 +1,17 @@
+- name: Set Ubuntu facts
+  ansible.builtin.set_fact:
+    version: "{{ ansible_distribution_version | replace('.', '') }}"
+
+- name: Set Ubuntu arch for x86_64
+  ansible.builtin.set_fact:
+    arch: "amd64"
+  when: ansible_architecture == "x86_64"
+
+- name: Set Ubuntu arch for aarch64
+  ansible.builtin.set_fact:
+    arch: "arm64"
+  when: ansible_architecture == "aarch64"
+
+- name: Set Ubuntu download URL
+  ansible.builtin.set_fact:
+    download_url: "{{ driver_base_url.nvidia }}/{{ driver_version }}/nvidia-driver-local-repo-ubuntu{{ version }}-{{ driver_version }}_1.0-1_{{ arch }}.deb"

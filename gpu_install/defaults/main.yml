@@ -1,0 +1,8 @@
+---
+# vars file for gpu_install
+vendor: nvidia # Valid values: nvidia, amd
+driver_version: 550.127.05 # Valid values depend on what vendor
+library_version: false # CUDA version for Nvidia, ROCM for AMD, valid versions depend on driver version
+dry_run: false # Prevents actual installation
+driver_base_url:
+  nvidia: https://us.download.nvidia.com/tesla

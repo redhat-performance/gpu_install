@@ -1,0 +1,4 @@
+---
+# handlers file for gpu_install
+- name: Reboot system
+  ansible.builtin.reboot:

@@ -1,0 +1,9 @@
+---
+- name: Test for Nvidia goodies
+  hosts: all
+  become: true
+  roles:
+    - role: gpu_install
+      dry_run: false
+      driver_version: 570.86.15
+      library_version: 12.8

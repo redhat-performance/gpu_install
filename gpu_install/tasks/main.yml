@@ -1,0 +1,10 @@
+---
+# tasks file for gpu_install
+- name: Fail if unsupported vendor
+  ansible.builtin.fail:
+    msg: "Unsupported vendor {{ vendor }}"
+  when: (vendor | lower) not in ['nvidia', 'amd']
+
+- name: Include correct installation tasks
+  ansible.builtin.include_tasks:
+    file: "{{ vendor }}/main.yml"
