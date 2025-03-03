@@ -1,0 +1,31 @@
+---
+- name: Install required packages/repos
+  ansible.builtin.dnf:
+    pkg:
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
+      - kernel-devel-{{ ansible_kernel }}
+      - kernel-headers-{{ ansible_kernel }}
+      - kernel-devel-matched-{{ ansible_kernel }}
+      - python3-setuptools
+      - python3-wheel
+    state: present
+  when: not dry_run
+
+- name: Install AMD repo
+  ansible.builtin.dnf:
+    pkg:
+      - https://repo.radeon.com/amdgpu-install/6.3.3/rhel/9.4/amdgpu-install-6.3.60303-1.el9.noarch.rpm
+    state: present
+    disable_gpg_check: True
+  when: not dry_run
+
+- name: Install AMD drivers
+  ansible.builtin.dnf:
+    pkg:
+      - amdgpu-dkms
+      - rocm
+    state: present
+  notify:
+    - Reboot system
+  when: not dry_run
+  
