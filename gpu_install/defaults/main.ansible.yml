@@ -6,3 +6,4 @@ library_version: false # CUDA version for Nvidia, ROCM for AMD, valid versions d
 dry_run: false # Prevents actual installation
 driver_base_url:
   nvidia: https://us.download.nvidia.com/tesla
+  amd: https://repo.radeon.com/amdgpu-install

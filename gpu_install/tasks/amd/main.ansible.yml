@@ -1,0 +1,25 @@
+---
+- name: Fail on unsupported distribution
+  ansible.builtin.fail:
+    msg: "Unsupported distribution {{ ansible_distribution }}"
+  when: (ansible_distribution | lower) not in ["redhat"]
+
+#- name: Prepare system facts
+#  ansible.builtin.include_tasks:
+#    file: "{{ vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
+
+#- name: Verify driver version exists
+#  block:
+#    - name: Check AMD URL
+#      ansible.builtin.uri:
+#        url: "{{ download_url }}"
+#        method: HEAD # Using HEAD to prevent a full download
+#      no_log: true # Hide the ugly output
+#  rescue: # Display the nicer output
+#    - name: Fail if driver version not found
+#      ansible.builtin.fail:
+#        msg: "Could not find driver version {{ driver_version }} at {{ download_url }}"
+
+- name: Configure System
+  ansible.builtin.include_tasks:
+    file: "{{ vendor }}/install/{{ ansible_distribution | lower }}.yml"

@@ -14,7 +14,7 @@
 - name: Install AMD repo
   ansible.builtin.dnf:
     pkg:
-      - https://repo.radeon.com/amdgpu-install/6.3.3/rhel/9.4/amdgpu-install-6.3.60303-1.el9.noarch.rpm
+      - https://repo.radeon.com/amdgpu-install/6.3.3/rhel/{{ ansible_distribution_version }}/amdgpu-install-6.3.60303-1.el{{ ansible_distribution_major_version }}.noarch.rpm
     state: present
     disable_gpg_check: True
   when: not dry_run
@@ -28,4 +28,3 @@
   notify:
     - Reboot system
   when: not dry_run
-  
