@@ -1,10 +1,18 @@
 ---
+- name: Build URL
+  ansible.builtin.set_fact:
+    url: "{{ driver_base_url.amd }}/{{ library_version }}/{{ os_vendor }}/{{ os_version }}"
+
 - name: Get full HTML listing
   ansible.builtin.uri:
-    url: "{{ driver_base_url.amd }}/{{ library_version }}/{{ os_vendor }}/9.4"
+    url: "{{ url }} "
     return_content: true
   register: input
 
-- name: Output data
+- name: Set download URL
+  ansible.builtin.set_fact:
+    download_url: "{{ url }}/{{ input.content | regex_search(regex) }}"
+
+- name: Show download URL
   ansible.builtin.debug:
-    var: input.content | regex_search(regex)
+    msg: "Downloading {{ download_url }}"

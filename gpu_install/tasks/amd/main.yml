@@ -2,11 +2,11 @@
 - name: Fail on unsupported distribution
   ansible.builtin.fail:
     msg: "Unsupported distribution {{ ansible_distribution }}"
-  when: (ansible_distribution | lower) not in ["redhat"]
+  when: (ansible_distribution | lower) not in ["redhat", "fedora"]
 
 - name: Prepare system facts
   ansible.builtin.include_tasks:
-    file: "{{ vendor }}/pre_download/rhel.yml"
+    file: "{{ vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
 
 #- name: Verify driver version exists
 #  block:
