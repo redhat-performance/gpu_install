@@ -1,0 +1,10 @@
+---
+- name: Set host facts
+  ansible.builtin.set_fact:
+    os_vendor: rhel
+    os_version: "{{ ansible_distribution_version }}"
+    regex: "amdgpu-install-[0-9\\.]+-1.el[0-9].noarch.rpm"
+
+- name: Find RPM
+  ansible.builtin.include_tasks:
+    file: "{{ vendor }}/pre_download/fetch_filename.yml"

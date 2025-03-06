@@ -1,0 +1,10 @@
+---
+- name: Get full HTML listing
+  ansible.builtin.uri:
+    url: "{{ driver_base_url.amd }}/{{ library_version }}/{{ os_vendor }}/9.4"
+    return_content: true
+  register: input
+
+- name: Output data
+  ansible.builtin.debug:
+    var: input.content | regex_search(regex)

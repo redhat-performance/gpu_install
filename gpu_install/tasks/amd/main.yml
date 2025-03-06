@@ -4,9 +4,9 @@
     msg: "Unsupported distribution {{ ansible_distribution }}"
   when: (ansible_distribution | lower) not in ["redhat"]
 
-#- name: Prepare system facts
-#  ansible.builtin.include_tasks:
-#    file: "{{ vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
+- name: Prepare system facts
+  ansible.builtin.include_tasks:
+    file: "{{ vendor }}/pre_download/rhel.yml"
 
 #- name: Verify driver version exists
 #  block:
