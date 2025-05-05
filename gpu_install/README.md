@@ -19,9 +19,11 @@ Role Variables
 - `driver_version`
   - The version of the relevant drivers to install
   - Valid values depend on `vendor`
+  - This does nothing for AMD
 - `library_version`
   - Installs CUDA/ROCm with the specified version
   - Valid values depend on `vendor`
+  - This is required for AMD
 - `dry_run`
   - Perform a dry run without actually installing anything
   - Default is `False`
