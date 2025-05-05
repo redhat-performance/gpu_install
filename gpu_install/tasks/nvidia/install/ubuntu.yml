@@ -16,6 +16,9 @@
     remote_src: true
     src: "{{ item.path }}"
     dest: /usr/share/keyrings/
+    mode: "0644"
+    owner: root
+    group: root
   with_items: "{{ keys.files }}"
 
 - name: Install Drivers

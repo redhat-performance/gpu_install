@@ -1,0 +1,13 @@
+ancestor: null
+releases:
+  1.0.0:
+    changes:
+      release_summary: 'Initial release, support for Nvidia driver installations on
+        RHEL, Amazon Linux, Ubuntu, and Fedora.
+
+        AMD installation support on RHEL-only due to lack of instances.
+
+        '
+    fragments:
+    - 1.0.0.yml
+    release_date: '2025-05-05'

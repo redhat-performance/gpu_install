@@ -16,7 +16,7 @@
     pkg:
       - "{{ download_url }}"
     state: present
-    disable_gpg_check: True
+    disable_gpg_check: true
   when: not dry_run
 
 - name: Install AMD drivers

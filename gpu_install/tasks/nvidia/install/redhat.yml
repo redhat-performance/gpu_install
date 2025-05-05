@@ -10,6 +10,7 @@
 - name: Import EPEL RPM GPG Key
   ansible.builtin.rpm_key:
     key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+  when: not dry_run
 
 - name: Install required packages/repos
   ansible.builtin.dnf:
@@ -32,9 +33,13 @@
   ansible.builtin.get_url:
     dest: /etc/yum.repos.d/cuda-rhel{{ ansible_distribution_major_version }}.repo
     url: https://developer.download.nvidia.com/compute/cuda/repos/rhel{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/cuda-rhel{{ ansible_distribution_major_version }}.repo
+    mode: "0644"
+    owner: root
+    group: root
   when: not dry_run and library_version
 
 - name: Install CUDA
+  when: not dry_run and library_version
   block:
     - name: Install CUDA
       no_log: true

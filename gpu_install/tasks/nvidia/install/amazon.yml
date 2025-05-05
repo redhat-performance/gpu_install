@@ -27,9 +27,13 @@
   ansible.builtin.get_url:
     dest: /etc/yum.repos.d/cuda-rhel{{ ansible_distribution_major_version }}.repo
     url: https://developer.download.nvidia.com/compute/cuda/repos/amzn{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/cuda-amzn{{ ansible_distribution_major_version }}.repo
+    mode: "0644"
+    owner: root
+    group: root
   when: not dry_run and library_version
 
 - name: Install CUDA
+  when: not dry_run and library_version
   block:
     - name: Install CUDA
       no_log: true
@@ -40,4 +44,3 @@
     - name: Log error
       ansible.builtin.debug:
         msg: "WARNING Could not install CUDA {{ library_version }}"
-  when: not dry_run and library_version
