@@ -1,0 +1,9 @@
+---
+- name: Test for Nvidia goodies
+  hosts: localhost
+  become: false
+  roles:
+    - role: gpu_install
+      dry_run: True
+      vendor: amd
+      library_version: 6.3.3

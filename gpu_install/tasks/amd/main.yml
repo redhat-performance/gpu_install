@@ -2,7 +2,7 @@
 - name: Fail on unsupported distribution
   ansible.builtin.fail:
     msg: "Unsupported distribution {{ ansible_distribution }}"
-  when: (ansible_distribution | lower) not in ["redhat", "fedora"]
+  when: (ansible_distribution | lower) not in ["redhat"]
 
 - name: Prepare system facts
   ansible.builtin.include_tasks:
