@@ -5,4 +5,4 @@
 
 - name: Set Download URL
   ansible.builtin.set_fact:
-    download_url: "{{ driver_base_url.nvidia }}/{{ driver_version }}/nvidia-driver-local-repo-amzn{{ ansible_distribution_major_version }}-{{ driver_version }}-1.0-1.{{ ansible_architecture }}.rpm"
+    download_url: "{{ lookup('ansible.builtin.template', 'nvidia/driver_url.j2', template_vars={'distro': 'amzn', 'extension': 'rpm'}) }}"

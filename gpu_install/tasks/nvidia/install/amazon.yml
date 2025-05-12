@@ -12,6 +12,7 @@
     pkg:
       - kernel-devel-{{ ansible_kernel }}
       - kernel-headers-{{ ansible_kernel }}
+      - kernel-modules-extra-{{ ansible_kernel }}
     state: present
   when: not dry_run
 
@@ -26,7 +27,7 @@
 - name: Fetch CUDA repository
   ansible.builtin.get_url:
     dest: /etc/yum.repos.d/cuda-rhel{{ ansible_distribution_major_version }}.repo
-    url: https://developer.download.nvidia.com/compute/cuda/repos/amzn{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/cuda-amzn{{ ansible_distribution_major_version }}.repo
+    url: "{{ lookup('ansible.builtin.template', 'nvidia/cuda_rpm_repo.j2', template_vars={'distro': 'amzn'}) }}"
     mode: "0644"
     owner: root
     group: root
