@@ -49,5 +49,3 @@
   rescue:
     - name: Log error
       ansible.builtin.debug:
-        msg: "WARNING Could not install CUDA {{ library_version }}"
-  when: not dry_run and library_version
