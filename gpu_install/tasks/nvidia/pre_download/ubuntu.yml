@@ -14,4 +14,10 @@
 
 - name: Set Ubuntu download URL
   ansible.builtin.set_fact:
-    download_url: "{{ driver_base_url.nvidia }}/{{ driver_version }}/nvidia-driver-local-repo-ubuntu{{ version }}-{{ driver_version }}_1.0-1_{{ arch }}.deb"
+    download_url: >
+      {{ lookup(
+            'ansible.builtin.template',
+            'nvidia/driver_url.j2',
+            template_vars={'distro': 'ubuntu', 'version': version, 'arch': arch, 'extension': 'deb', 'sep': '_'}
+          )
+      }}

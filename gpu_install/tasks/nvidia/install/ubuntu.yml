@@ -29,3 +29,15 @@
   notify:
     - Reboot system
   when: not dry_run
+
+- name: Install CUDA
+  when: not dry_run and library_version
+  block:
+    - name: Install CUDA Keyring
+      ansible.builtin.apt:
+        deb: "{{ lookup('ansible.builtin.template', 'nvidia/cuda_deb_repo.j2', template_vars={'distro': 'ubuntu'}) }}"
+
+    - name: Install CUDA toolkit
+      ansible.builtin.apt:
+        pkg:
+          - nvidia-cuda-toolkit
