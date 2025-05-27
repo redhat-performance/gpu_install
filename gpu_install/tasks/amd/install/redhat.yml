@@ -9,7 +9,7 @@
       - python3-setuptools
       - python3-wheel
     state: present
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Install AMD repo
   ansible.builtin.dnf:
@@ -17,7 +17,7 @@
       - "{{ download_url }}"
     state: present
     disable_gpg_check: true
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Install AMD drivers
   ansible.builtin.dnf:
@@ -27,4 +27,4 @@
     state: present
   notify:
     - Reboot system
-  when: not dry_run
+  when: not gpu_install_dry_run

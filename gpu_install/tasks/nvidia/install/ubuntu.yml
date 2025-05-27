@@ -2,13 +2,14 @@
 - name: Install driver repo
   ansible.builtin.apt:
     deb: "{{ download_url }}"
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Find GPG key
   ansible.builtin.find:
-    paths: /var/nvidia-driver-local-repo-ubuntu{{ ansible_distribution_version | replace('.', '') }}-{{ driver_version }}
+    paths: /var/nvidia-driver-local-repo-ubuntu{{ ansible_distribution_version | replace('.', '') }}-{{ gpu_install_driver_version }}
     patterns: "nvidia-driver-*-keyring.gpg"
     file_type: file
+  when: not gpu_install_dry_run
   register: keys
 
 - name: Copy GPG key to needed location
@@ -19,6 +20,7 @@
     mode: "0644"
     owner: root
     group: root
+  when: not gpu_install_dry_run
   with_items: "{{ keys.files }}"
 
 - name: Install Drivers
@@ -28,10 +30,10 @@
       - cuda-drivers
   notify:
     - Reboot system
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Install CUDA
-  when: not dry_run and library_version
+  when: not gpu_install_dry_run and gpu_install_library_version
   block:
     - name: Install CUDA Keyring
       ansible.builtin.apt:

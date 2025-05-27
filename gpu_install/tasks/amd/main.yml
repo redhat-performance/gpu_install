@@ -6,8 +6,8 @@
 
 - name: Prepare system facts
   ansible.builtin.include_tasks:
-    file: "{{ vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
+    file: "{{ gpu_install_vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
 
 - name: Configure System
   ansible.builtin.include_tasks:
-    file: "{{ vendor }}/install/{{ ansible_distribution | lower }}.yml"
+    file: "{{ gpu_install_vendor }}/install/{{ ansible_distribution | lower }}.yml"

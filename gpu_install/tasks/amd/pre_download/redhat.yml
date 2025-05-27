@@ -7,4 +7,4 @@
 
 - name: Find RPM
   ansible.builtin.import_tasks:
-    file: "{{ vendor }}/pre_download/fetch_filename.yml"
+    file: "{{ gpu_install_vendor }}/pre_download/fetch_filename.yml"
