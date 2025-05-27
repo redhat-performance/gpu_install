@@ -1,0 +1,17 @@
+on:
+  release:
+    types:
+      - published
+
+env:
+  ROLE_NAME: gpu_install
+
+jobs:
+  release_galaxy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install relevant packages
+        run: apt update && apt install -y ansible
+      
+      - name: Publish ansible role version to galaxy
+        run: ansible-galaxy role import --branch ${{ github.event.release.tag_name }} --token ${{ secrets.ANSIBLE_GALAXY_API_TOKEN }} ${{ github.repository_owner }} ${{ github.event.repository.name}}
