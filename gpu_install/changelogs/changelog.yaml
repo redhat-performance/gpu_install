@@ -9,5 +9,5 @@ releases:
 
         '
     fragments:
-    - 1.0.0.yml
+      - 1.0.0.yml
     release_date: '2025-05-05'
