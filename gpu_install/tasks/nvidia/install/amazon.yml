@@ -5,15 +5,16 @@
       - "{{ download_url }}"
     state: present
     disable_gpg_check: true
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Install required packages/repos
   ansible.builtin.dnf:
     pkg:
       - kernel-devel-{{ ansible_kernel }}
       - kernel-headers-{{ ansible_kernel }}
+      - kernel-modules-extra-{{ ansible_kernel }}
     state: present
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Install Nvidia drivers
   ansible.builtin.dnf:
@@ -21,23 +22,26 @@
       - "@nvidia-driver:latest-dkms"
   notify:
     - Reboot system
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Fetch CUDA repository
   ansible.builtin.get_url:
     dest: /etc/yum.repos.d/cuda-rhel{{ ansible_distribution_major_version }}.repo
-    url: https://developer.download.nvidia.com/compute/cuda/repos/amzn{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/cuda-amzn{{ ansible_distribution_major_version }}.repo
-  when: not dry_run and library_version
+    url: "{{ lookup('ansible.builtin.template', 'nvidia/cuda_rpm_repo.j2', template_vars={'distro': 'amzn'}) }}"
+    mode: "0644"
+    owner: root
+    group: root
+  when: not gpu_install_dry_run and gpu_install_library_version
 
 - name: Install CUDA
+  when: not gpu_install_dry_run and gpu_install_library_version
   block:
     - name: Install CUDA
       no_log: true
       ansible.builtin.dnf:
         name:
-          - cuda-{{ library_version | replace('.', '-') }}
+          - cuda-{{ gpu_install_library_version | replace('.', '-') }}
   rescue:
     - name: Log error
       ansible.builtin.debug:
-        msg: "WARNING Could not install CUDA {{ library_version }}"
-  when: not dry_run and library_version
+        msg: "WARNING Could not install CUDA {{ gpu_install_library_version }}"

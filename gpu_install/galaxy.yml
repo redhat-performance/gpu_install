@@ -1,0 +1,19 @@
+namespace: kdvalin
+name: gpu_install
+version: 1.0.0
+authors:
+  - Keith Valin <kvalin@redhat.com>
+description: Install GPU drivers based off Vendor
+license:
+  - GPL-2.0-only
+readme: README.md
+repository: https://github.com/kdvalin/gpu-driver-install-role
+build_ignore:
+  - .ansible
+  - .vscode
+  - "*.inv"
+  - test.yml
+  - .gitignore
+
+tags:
+  - 'tools'

@@ -5,18 +5,41 @@
       - "{{ download_url }}"
     state: present
     disable_gpg_check: true
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Install required packages/repos
   ansible.builtin.dnf:
     pkg:
-      - kernel-devel-{{ ansible_kernel }}
-      - kernel-headers-{{ ansible_kernel }}
+      - kernel-devel-matched
+      - kernel-headers
     state: present
-  when: not dry_run
+  when: not gpu_install_dry_run
 
 - name: Install Nvidia drivers
   ansible.builtin.dnf:
     name:
-      - "@nvidia-driver:latest-dkms"
-  when: not dry_run
+      - "cuda-drivers"
+  notify:
+    - Reboot system
+  when: not gpu_install_dry_run
+
+- name: Fetch CUDA repository
+  ansible.builtin.get_url:
+    dest: /etc/yum.repos.d/cuda-fedora{{ ansible_distribution_major_version }}.repo
+    url: "{{ lookup('ansible.builtin.template', 'nvidia/cuda_rpm_repo.j2', template_vars={'distro': 'fedora'}) }}"
+    mode: "0644"
+    owner: root
+    group: root
+  when: not gpu_install_dry_run and gpu_install_library_version
+
+- name: Install CUDA
+  when: not gpu_install_dry_run and gpu_install_library_version
+  block:
+    - name: Install CUDA
+      no_log: true
+      ansible.builtin.dnf:
+        name:
+          - cuda-{{ gpu_install_library_version | replace('.', '-') }}
+  rescue:
+    - name: Log error
+      ansible.builtin.debug:

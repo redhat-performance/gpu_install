@@ -6,7 +6,7 @@
 
 - name: Prepare system facts
   ansible.builtin.include_tasks:
-    file: "{{ vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
+    file: "{{ gpu_install_vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
 
 - name: Verify driver version exists
   block:
@@ -18,8 +18,8 @@
   rescue: # Display the nicer output
     - name: Fail if driver version not found
       ansible.builtin.fail:
-        msg: "Could not find driver version {{ driver_version }} at {{ download_url }}"
+        msg: "Could not find driver version {{ gpu_install_driver_version }} at {{ download_url }}"
 
 - name: Configure System
   ansible.builtin.include_tasks:
-    file: "{{ vendor }}/install/{{ ansible_distribution | lower }}.yml"
+    file: "{{ gpu_install_vendor }}/install/{{ ansible_distribution | lower }}.yml"

@@ -1,2 +1,5 @@
 .ansible
 *.inv
+*.tar*
+test*.yml
+terraform

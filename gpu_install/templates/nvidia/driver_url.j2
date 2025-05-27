@@ -1,0 +1,1 @@
+https://us.download.nvidia.com/tesla/{{ gpu_install_driver_version }}/nvidia-driver-local-repo-{{ distro }}{{ version | default(ansible_distribution_major_version) }}-{{ gpu_install_driver_version }}{{ sep | default("-") }}1.0-1{{ sep | default(".") }}{{ arch | default(ansible_architecture) }}.{{ extension }}

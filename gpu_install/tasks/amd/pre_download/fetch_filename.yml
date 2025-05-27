@@ -1,7 +1,7 @@
 ---
 - name: Build URL
   ansible.builtin.set_fact:
-    url: "{{ driver_base_url.amd }}/{{ library_version }}/{{ os_vendor }}/{{ os_version }}"
+    url: "{{ gpu_install_driver_base_url.amd }}/{{ gpu_install_library_version }}/{{ os_vendor }}/{{ os_version }}"
 
 - name: Get full HTML listing
   ansible.builtin.uri:
