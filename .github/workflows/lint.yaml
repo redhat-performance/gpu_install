@@ -5,6 +5,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Install ansible-lint
         run: pip3 install ansible-lint
       
