@@ -11,20 +11,20 @@ None
 Role Variables
 --------------
 
-- `vendor`
+- `gpu_install_vendor`
   - The vendor of the GPU
   - Valid values:
     - amd
     - nvidia
-- `driver_version`
+- `gpu_install_driver_version`
   - The version of the relevant drivers to install
   - Valid values depend on `vendor`
   - This does nothing for AMD
-- `library_version`
+- `gpu_install_library_version`
   - Installs CUDA/ROCm with the specified version
   - Valid values depend on `vendor`
   - This is required for AMD
-- `dry_run`
+- `gpu_install_dry_run`
   - Perform a dry run without actually installing anything
   - Default is `False`
 
@@ -45,9 +45,9 @@ Example Playbook
   become: True
   roles:
     - role: gpu_install
-      vendor: nvidia
-      driver_version: 550.127.05
-      library_version: 12.4
+      gpu_install_vendor: nvidia
+      gpu_install_driver_version: 550.127.05
+      gpu_install_library_version: 12.4
 ```
 
 ## AMD
@@ -58,8 +58,8 @@ Example Playbook
   become: True
   roles:
     - role: gpu_install
-      vendor: amd
-      library_version: 6.3.3
+      gpu_install_vendor: amd
+      gpu_install_library_version: 6.3.3
 ```
 
 License
