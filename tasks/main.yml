@@ -1,5 +1,10 @@
 ---
 # tasks file for gpu_install
+- name: Determine vendor
+  when: gpu_install_vendor == "auto"
+  ansible.builtin.include_tasks:
+    file: "autodetect.yml"
+
 - name: Fail if unsupported vendor
   ansible.builtin.fail:
     msg: "Unsupported vendor {{ vendor }}"
