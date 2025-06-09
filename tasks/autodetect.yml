@@ -1,12 +1,12 @@
 - name: Get list of PCI devices
   ansible.builtin.command: lspci
-  changed_when: never
+  changed_when: false
   register: pci_devices
 
 - name: Set Vendor to Nvidia
   ansible.builtin.set_fact:
     gpu_install_vendor: nvidia
-  when: pci_devices | regex_search("^[0-9a-f]{2}:[0-9a-f]{2}.[0-9a-f] 3D controller.*NVIDIA.*$") is not None
+  when: pci_devices | regex_search("^.*3D controller.*NVIDIA.*$")
 
 - name: Error if failed to autodetect
   ansible.builtin.fail:
