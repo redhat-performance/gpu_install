@@ -12,7 +12,7 @@ driver_base_url:
   amd: https://repo.radeon.com/amdgpu-install
 
 default_driver_version:
-  nvidia: 550.127.05
+  nvidia: 550.127.08
   amd: 6.4.1
 
 default_library_version:
