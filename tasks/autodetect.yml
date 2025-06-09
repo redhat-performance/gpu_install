@@ -12,3 +12,13 @@
   ansible.builtin.fail:
     msg: Could not determine GPU vendor, exiting out
   when: gpu_install_vendor == "auto"
+
+- name: Set driver version
+  ansible.builtin.set_fact:
+    gpu_install_driver_version: "{{ default_driver_version[gpu_install_vendor] }}"
+  when: not gpu_install_driver_version
+
+- name: Set Library Version
+  ansible.builtin.set_fact:
+    gpu_install_library_version: "{{ default_library_version[gpu_install_vendor] }}"
+  when: not gpu_install_library_version and gpu_install_library
