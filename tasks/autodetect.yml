@@ -15,10 +15,6 @@
 
 - name: Set driver version
   ansible.builtin.set_fact:
-    gpu_install_driver_version: "{{ default_driver_version[gpu_install_vendor] }}"
-  when: not gpu_install_driver_version
-
-- name: Set Library Version
-  ansible.builtin.set_fact:
-    gpu_install_library_version: "{{ default_library_version[gpu_install_vendor] }}"
-  when: not gpu_install_library_version and gpu_install_library
+    gpu_install_driver_version: "{{ gpu_install_driver_version | default(default_driver_version[gpu_install_vendor]) }}"
+    # Check if we're installing the GPU libraries, if so, set a default version if one is not provided. If not
+    gpu_install_library_version: "{{ gpu_install_library_version | default(default_library_version[gpu_install_vendor]) }}"

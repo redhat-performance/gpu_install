@@ -30,10 +30,10 @@
     mode: "0644"
     owner: root
     group: root
-  when: not gpu_install_dry_run and gpu_install_library_version
+  when: not gpu_install_dry_run and gpu_install_library
 
 - name: Install CUDA
-  when: not gpu_install_dry_run and gpu_install_library_version
+  when: not gpu_install_dry_run and gpu_install_library
   block:
     - name: Install CUDA
       no_log: true
