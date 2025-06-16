@@ -14,16 +14,18 @@ Role Variables
 - `gpu_install_vendor`
   - The vendor of the GPU
   - Valid values:
+    - auto (does best effort to determine which vendor's GPUs are present)
     - amd
     - nvidia
 - `gpu_install_driver_version`
   - The version of the relevant drivers to install
   - Valid values depend on `vendor`
-  - This does nothing for AMD
+- `gpu_install_library`
+  - Toggles wheter or not to install CUDA/ROCm
+  - Default is `False`
 - `gpu_install_library_version`
   - Installs CUDA/ROCm with the specified version
   - Valid values depend on `vendor`
-  - This is required for AMD
 - `gpu_install_dry_run`
   - Perform a dry run without actually installing anything
   - Default is `False`
