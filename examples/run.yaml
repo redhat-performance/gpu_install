@@ -1,9 +1,9 @@
 ---
 - name: Install Drivers
   hosts: all
-  become: True
+  become: true
   roles:
-    - role: kdvalin.gpu_install
+    - role: redhat-performance.gpu_install
       gpu_install_vendor: nvidia
       gpu_install_driver_version: 570.148.08
       gpu_install_library_version: 12.8
