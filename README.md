@@ -16,14 +16,23 @@ Role Variables
   - Valid values:
     - amd
     - nvidia
+- `gpu_install_library`
+  - Whether or not to install supporting GPU Libraries
+    - CUDA for Nvidia
+    - ROCm for AMD
+  - Valid values
+    - `true` to install supporting libraries
+    - `false` to skip installation of supporting libraries (Default)
 - `gpu_install_driver_version`
   - The version of the relevant drivers to install
   - Valid values depend on `vendor`
-  - This does nothing for AMD
+    - Default for Nvidia is `550.127.05`
+    - Default for AMD is `6.3.3`
 - `gpu_install_library_version`
   - Installs CUDA/ROCm with the specified version
   - Valid values depend on `vendor`
-  - This is required for AMD
+    - Default for Nvidia is `12.4`
+    - Default for AMD is `6.3.3`
 - `gpu_install_dry_run`
   - Perform a dry run without actually installing anything
   - Default is `False`
