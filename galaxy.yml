@@ -15,6 +15,7 @@ build_ignore:
   - test.yml
   - .gitignore
   - .github
+  - examples
 
 tags:
   - 'tools'
