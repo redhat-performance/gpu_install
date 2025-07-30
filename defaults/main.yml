@@ -2,6 +2,7 @@
 # vars file for gpu_install
 gpu_install_vendor: nvidia # Valid values: nvidia, amd
 gpu_install_driver_version: 550.127.05 # Valid values depend on what vendor
+gpu_install_library: false # Valid values: true, false
 gpu_install_library_version: false # CUDA version for Nvidia, ROCM for AMD, valid versions depend on driver version
 gpu_install_dry_run: false # Prevents actual installation
 driver_base_url:
