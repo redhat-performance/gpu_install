@@ -11,6 +11,8 @@ driver_base_url:
 
 driver_version_default:
   nvidia: 550.127.05
+  amd: 6.3.3
 
 library_version_default:
   nvidia: 12.4
+  amd: 6.3.3
