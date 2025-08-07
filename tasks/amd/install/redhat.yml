@@ -23,8 +23,14 @@
   ansible.builtin.dnf:
     pkg:
       - amdgpu-dkms
-      - rocm
     state: present
   notify:
     - Reboot system
   when: not gpu_install_dry_run
+
+- name: Install ROCM
+  ansible.builtin.dnf:
+    pkg:
+      - rocm
+    state: present
+  when: not gpu_install_dry_run and gpu_install_library

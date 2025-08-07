@@ -8,6 +8,15 @@
   ansible.builtin.include_tasks:
     file: "{{ gpu_install_vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
 
+- name: Set defaults
+  block:
+    - name: Set default driver version
+      ansible.builtin.set_fact:
+        gpu_install_driver_version: "{{ gpu_install_driver_version | default(driver_version_default.nvidia) }}"
+    - name: Set default library version
+      ansible.builtin.set_fact:
+        gpu_install_library_version: "{{ gpu_install_library_version | default(library_version_default.nvidia) }}"
+
 - name: Verify driver version exists
   block:
     - name: Check Nvidia URL
