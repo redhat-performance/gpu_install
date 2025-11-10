@@ -16,6 +16,7 @@
   community.general.zypper:
     pkg:
       - kernel-{{ kernel_variant }}-devel-{{ kernel_version }}
+    auto_import_keys: true
     state: present
   when: not gpu_install_dry_run
 
