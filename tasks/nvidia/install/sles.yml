@@ -1,0 +1,28 @@
+---
+- name: Install GPU driver repository
+  community.general.packaging.os.zypper:
+    pkg:
+      - "{{ download_url }}"
+    state: present
+    disable_gpg_check: true
+  when: not gpu_install_dry_run
+
+- name: Determine kernel version and variant
+  ansible.builtin.set_fact:
+    kernel_variant: "{{ (ansible_kernel | split('-'))[-1] }}"
+    kernel_version: "{{ (ansible_kernel | split('-'))[0:-1] | join('-') }}"
+
+- name: Install required packages/repos
+  community.general.packaging.os.zypper:
+    pkg:
+      - kernel-{{ kernel_variant }}-devel-{{ kernel_version }}
+    state: present
+  when: not gpu_install_dry_run
+
+- name: Install Nvidia drivers
+  community.general.packaging.os.zypper:
+    name:
+      - "cuda-drivers"
+  notify:
+    - Reboot system
+  when: not gpu_install_dry_run

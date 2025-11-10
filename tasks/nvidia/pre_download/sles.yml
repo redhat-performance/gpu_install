@@ -1,0 +1,4 @@
+---
+- name: Set SLES-based URL
+  ansible.builtin.set_fact:
+    download_url: "{{ lookup('ansible.builtin.template', 'nvidia/driver_url.j2', template_vars={'distro': 'sles', 'extension': 'rpm'}) }}"
