@@ -27,3 +27,21 @@
   notify:
     - Reboot system
   when: not gpu_install_dry_run
+
+- name: Install CUDA
+  when: not gpu_install_dry_run and gpu_install_library
+  block:
+    - name: Install CUDA repo
+      ansible.builtin.get_url:
+        dest: /etc/zypp/repos.d/cuda-sles{{ ansible_distribution_major_version }}.repo
+        url: "{{ lookup('ansible.builtin.template', 'nvidia/cuda_rpm_repo.j2', template_vars={'distro': 'sles'}) }}"
+        mode: "0644"
+        owner: root
+        group: root
+
+    - name: Install CUDA
+      community.general.zypper:
+        pkg:
+          - cuda-toolkit-{{ gpu_install_library_version | replace('.', '-') }}
+        state: present
+        auto_import_keys: true
