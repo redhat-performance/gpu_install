@@ -10,7 +10,7 @@
 - name: Determine kernel version and variant
   ansible.builtin.set_fact:
     kernel_variant: "{{ (ansible_kernel | split('-'))[-1] }}"
-    kernel_version: "{{ (ansible_kernel | split('-'))[0:-1] | join('-') }}"
+    kernel_version: "{{ (ansible_kernel | split('-'))[0] }}"
 
 - name: Install required packages/repos
   community.general.packaging.os.zypper:

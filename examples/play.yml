@@ -1,0 +1,6 @@
+---
+- name: Install Nvidia Drivers
+  hosts: all
+  become: true
+  roles:
+    - gpu_install_role
