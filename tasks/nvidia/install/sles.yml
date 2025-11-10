@@ -1,6 +1,6 @@
 ---
 - name: Install GPU driver repository
-  community.general.packaging.os.zypper:
+  community.general.zypper:
     pkg:
       - "{{ download_url }}"
     state: present
@@ -13,14 +13,14 @@
     kernel_version: "{{ (ansible_kernel | split('-'))[0] }}"
 
 - name: Install required packages/repos
-  community.general.packaging.os.zypper:
+  community.general.zypper:
     pkg:
       - kernel-{{ kernel_variant }}-devel-{{ kernel_version }}
     state: present
   when: not gpu_install_dry_run
 
 - name: Install Nvidia drivers
-  community.general.packaging.os.zypper:
+  community.general.zypper:
     name:
       - "cuda-drivers"
   notify:
