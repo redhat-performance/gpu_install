@@ -4,18 +4,18 @@
     msg: "Unsupported distribution {{ ansible_distribution }}"
   when: (ansible_distribution | lower) not in ["redhat"]
 
-- name: Prepare system facts
-  ansible.builtin.include_tasks:
-    file: "{{ gpu_install_vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
-
 - name: Set defaults
   block:
     - name: Set default driver version
       ansible.builtin.set_fact:
-        gpu_install_driver_version: "{{ gpu_install_driver_version | default(driver_version_default.amd) }}"
+        gpu_install_driver_version: "{{ gpu_install_driver_version | ternary(gpu_install_driver_version, driver_version_default.amd) }}"
     - name: Set default library version
       ansible.builtin.set_fact:
-        gpu_install_library_version: "{{ gpu_install_library_version | default(library_version_default.amd) }}"
+        gpu_install_library_version: "{{ gpu_install_library_version | ternary(gpu_install_driver_version, library_version_default.amd) }}"
+
+- name: Prepare system facts
+  ansible.builtin.include_tasks:
+    file: "{{ gpu_install_vendor }}/pre_download/{{ ansible_distribution | lower }}.yml"
 
 - name: Configure System
   ansible.builtin.include_tasks:
