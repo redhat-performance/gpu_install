@@ -39,7 +39,15 @@
       ansible.builtin.apt:
         deb: "{{ lookup('ansible.builtin.template', 'nvidia/cuda_deb_repo.j2', template_vars={'distro': 'ubuntu'}) }}"
 
+    - name: Get pin to prioritize the cuda repo
+      ansible.builtin.get_url:
+        url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu{{ version }}/{{ ansible_architecture }}/cuda-ubuntu{{ version }}.pin
+        dest: /etc/apt/preferences.d/cuda-repository-pin-600
+        owner: root
+        group: root
+        mode: "0644"
+
     - name: Install CUDA toolkit
       ansible.builtin.apt:
         pkg:
-          - nvidia-cuda-toolkit
+          - cuda-toolkit-{{ gpu_install_driver_version | replace('.', '-') }}
