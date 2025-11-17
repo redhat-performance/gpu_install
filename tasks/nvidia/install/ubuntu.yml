@@ -50,4 +50,4 @@
     - name: Install CUDA toolkit
       ansible.builtin.apt:
         pkg:
-          - nvidia-cuda-toolkit
+          - cuda-toolkit-{{ gpu_install_driver_version | replace('.', '-') }}
